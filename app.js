@@ -31,20 +31,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-//Connection 
-
-/*mongoose.connect("mongodb://localhost/:27017/mycrud",{
-  useNewUrlParser: true
-})
-.then(() => console.log("Mongo DB Connected"))
-.catch(err => console.log(err));
-
-*/
-
-//mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
-//State  0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
-//console.log(mongoose.connection.readyState);
-
 
 app.use(session({
   secret: 'djhxcvxfgshajfgjhgsjhfgsakjeauytsdfy',
@@ -62,28 +48,20 @@ app.use(function(req, res, next){
   next();
 });
 
-
 //Db Connection Start 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true })
-.then(() => console.log('connection succesful'))
+.then(() => console.log('connection successful'))
 .catch((err) => console.error(err))
 
+//mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
+//State  0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
+//console.log(mongoose.connection.readyState);
 //DB Connection End
-
- 
 
 app.use('/index', indexRouter);
 app.use('/', usersRouter);
  
-
-
- 
-
-
-
-
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

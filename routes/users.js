@@ -4,77 +4,14 @@ var router = express.Router();
 var UsersModel = require('../schema/user');
 var Response = require('../response');
 
-router.get('/get-all-users-api', function(req, res, next) {
-    UsersModel.find({}, function(err, posts) {
-        if (err) {
-            Response.errorResponse(err, res);
-        } else {
-            Response.successResponse('User Listing!', res, posts);
-        }
-    });
 
+
+//List Table Data
+router.get('/', function(req, res) {
+     
+            res.render('home');
+         
 });
-
-router.post('/add-users-api', function(req, res, next) {
-    console.log(req.body);
-
-    const mybodydata = {
-        user_name: req.body.user_name,
-        user_email: req.body.user_email,
-        user_mobile: req.body.user_mobile
-    }
-    var data = UsersModel(mybodydata);
-    //var data = UsersModel(req.body);
-    data.save(function(err) {
-        if (err) {
-            Response.errorResponse(err, res);
-           
-        } else {
-
-            Response.successResponse('User Added!', res, {});
-        }
-    })
-});
-
-
-/* GET SINGLE POST BY ID */
-router.get('/get-users-details-api/:id', function(req, res, next) {
-  UsersModel.findById(req.params.id, function (err, post) {
-    if(err){
-      Response.errorResponse(err,res);
-  }else{
-      Response.successResponse('User Detail!',res,post);
-  }
-  });
-});
-
-/* DELETE POST BY ID */
-router.delete('/delete-users-api', function(req, res, next) {
-  UsersModel.findByIdAndRemove(req.body._id, function (err, post) {
-    if (err) {
-      Response.errorResponse(err,res);
-    } else {
-      Response.successResponse('User deleted!',res,{});
-    }
-  });
-});
-
-/* UPDATE POST */
-router.post('/update-users-api', function(req, res, next) {
-  console.log(req.body._id);
-  UsersModel.findByIdAndUpdate(req.body._id, req.body, function (err, post) {
-  if (err) {
-    Response.errorResponse(err,res);
-  } else {
-    Response.successResponse('User updated!',res,{});
-  }
-});
-});
-
-
-
-
-
 
 
 
@@ -162,5 +99,81 @@ router.post('/edit/:id', function(req, res) {
         }
     });
 });
+
+
+router.get('/get-all-users-api', function(req, res, next) {
+    UsersModel.find({}, function(err, posts) {
+        if (err) {
+            Response.errorResponse(err, res);
+        } else {
+            Response.successResponse('User Listing!', res, posts);
+        }
+    });
+
+});
+
+router.post('/add-users-api', function(req, res, next) {
+    console.log(req.body);
+
+    const mybodydata = {
+        user_name: req.body.user_name,
+        user_email: req.body.user_email,
+        user_mobile: req.body.user_mobile
+    }
+    var data = UsersModel(mybodydata);
+    //var data = UsersModel(req.body);
+    data.save(function(err) {
+        if (err) {
+            Response.errorResponse(err, res);
+           
+        } else {
+
+            Response.successResponse('User Added!', res, {});
+        }
+    })
+});
+
+
+/* GET SINGLE POST BY ID */
+router.get('/get-users-details-api/:id', function(req, res, next) {
+  UsersModel.findById(req.params.id, function (err, post) {
+    if(err){
+      Response.errorResponse(err,res);
+  }else{
+      Response.successResponse('User Detail!',res,post);
+  }
+  });
+});
+
+/* DELETE POST BY ID */
+router.delete('/delete-users-api', function(req, res, next) {
+  UsersModel.findByIdAndRemove(req.body._id, function (err, post) {
+    if (err) {
+      Response.errorResponse(err,res);
+    } else {
+      Response.successResponse('User deleted!',res,{});
+    }
+  });
+});
+
+/* UPDATE POST */
+router.post('/update-users-api', function(req, res, next) {
+  console.log(req.body._id);
+  UsersModel.findByIdAndUpdate(req.body._id, req.body, function (err, post) {
+  if (err) {
+    Response.errorResponse(err,res);
+  } else {
+    Response.successResponse('User updated!',res,{});
+  }
+});
+});
+
+
+
+
+
+
+
+
 
 module.exports = router;
